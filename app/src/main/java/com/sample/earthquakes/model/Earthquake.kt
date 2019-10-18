@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Earthquake(
     @SerializedName("magnitude")
-    val magnitude: String,
+    val magnitude: Double,
     @SerializedName("lng")
     val lng: Double,
     @SerializedName("lat")
