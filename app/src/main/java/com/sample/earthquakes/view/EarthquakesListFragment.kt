@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sample.earthquakes.R
 import com.sample.earthquakes.viewmodel.EarthquakesViewModel
 
-class EarthquakesListFragment : Fragment() {
-
+class EarthquakesListFragment : Fragment(), EarthquakesRecyclerAdapter.OnItemClickListener {
     private lateinit var adapter: EarthquakesRecyclerAdapter
     private lateinit var viewModel: EarthquakesViewModel
 
@@ -29,7 +28,7 @@ class EarthquakesListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.earthquakes_list_fragment, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.earthquakes_recycler_view)
-        adapter = EarthquakesRecyclerAdapter(this.activity as Context)
+        adapter = EarthquakesRecyclerAdapter(this.activity as Context, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.activity as Context)
         recyclerView.addItemDecoration(DividerItemDecoration(this.activity as Context, LinearLayoutManager.VERTICAL))
@@ -41,5 +40,17 @@ class EarthquakesListFragment : Fragment() {
         viewModel.data.observe(this, Observer { earthquakes ->
             adapter.setData(earthquakes)
         })
+    }
+
+    override fun openMap(position: Int) {
+        val mapFragment = MapFragment()
+        val arguments = Bundle()
+        arguments.putInt(LIST_POSITION, position)
+        mapFragment.arguments = arguments
+        fragmentManager?.beginTransaction()?.apply {
+            replace(R.id.fragment_container, mapFragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 }

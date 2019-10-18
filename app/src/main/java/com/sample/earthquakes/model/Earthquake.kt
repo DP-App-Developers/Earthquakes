@@ -6,9 +6,9 @@ data class Earthquake(
     @SerializedName("magnitude")
     val magnitude: String,
     @SerializedName("lng")
-    val lng: String,
+    val lng: Double,
     @SerializedName("lat")
-    val lat: String,
+    val lat: Double,
     @SerializedName("datetime")
     val datetime: String,
     @SerializedName("depth")
