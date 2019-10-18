@@ -26,8 +26,8 @@ class EarthquakesRecyclerAdapter internal constructor(
     override fun getItemCount() = earthquakes.size
 
     override fun onBindViewHolder(holder: EarthquakeViewHolder, position: Int) {
-        holder.binding?.earthquake = earthquakes[position]
         with(holder) {
+            binding?.earthquake = earthquakes[position]
             itemView.setOnClickListener {
                 itemClickListener.openMap(position)
             }
