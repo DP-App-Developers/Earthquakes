@@ -20,7 +20,9 @@ class EarthquakesRepository {
         val earthquakesList = earthquakesService.getEarthquakes(true, 44.1, -9.9, -22.4, 55.2, "mkoppelman")
         earthquakesList.enqueue(object : Callback<EarthquakesList>{
             override fun onResponse(call: Call<EarthquakesList>, response: Response<EarthquakesList>) {
-                data.value = response.body()?.earthquakesList
+                if (response.isSuccessful) {
+                    data.value = response.body()?.earthquakesList
+                }
             }
 
             override fun onFailure(call: Call<EarthquakesList>, t: Throwable) {
